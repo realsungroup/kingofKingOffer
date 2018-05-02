@@ -1,0 +1,78 @@
+{
+    "app": {
+        "loginUrl": "",
+        "baseUrl": "http://kingofdinner.realsun.me:8097/rispweb/risphost/data/AjaxService.aspx?uiver=200&dynlogin=1",
+        "localbaseUrl": "",
+        "hostuser":"001",
+        "hostucode":"GHgfPHoXCQm3k3m3DY4DqQ==",
+        "hostwebpos":530122554910,
+        "getMethod": "ShowHostTableDatas_Ajax",
+        "uploadFileUrl":"http://kingofdinner.realsun.me:8097/rispweb/rispservice/SvcUploadFile2.aspx",
+        "uppath":"?savepath=c:\\web\\web\\rispweb\\upfiles&httppath=",
+        "httppath":"www.realsun.me:8003//rispweb/upfiles",
+        "saveMethod":"SaveData_Ajax",
+        "getBysqlMethod":"Ajax_QueryBySql",
+        "debug":true,
+        "dbs":null,
+        "user":"demo1",
+        "ucode":"uhNh1/6Npo/o5KQKTJ/fEQ==",
+        "upass":"123456",
+        "winno":0,
+        "winname":"",
+        "canteenno":0,
+        "canteenname":"",
+        "audiotranslateurl":"http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&text=",
+        "setupprinter":true,
+        "LODOP":null,
+        "setupaudio":false,
+        "poslogincode":"",
+        "displaymode":"",
+        "dbh":null,
+        "posrecordsjson":null,
+        "cpnid":516747252561,
+        "relid":530889813533,
+        "cbnid":533903478030,
+        "ctnid":533903517265,
+        "cpmid":533296089466,
+        "resid":533296089466
+    },
+    "kingofdinner":
+    {
+        "dinnerno":0,
+        "dinnerdates":"",
+        "dinnername":"",
+        "starttime":null,
+        "endtime":null,
+        "isopen":"",
+        "operator":"",
+        "updatetime":null,
+        "v_dishlistofprepare":530719253364
+    },
+     "dinnerlist":
+    {        
+        "resid":529019544123,
+        "subresid":512140171786
+    },
+    "offer":{
+        "opaid":534185837100,
+        "recid":534245859254,
+        "eaaid":534191593119,
+        "strid":534246858978,
+        "marid":534248331955,
+        "aveid":534248376903,
+        "eeaid":534190500725,
+        "cfnid":535721656557,
+        "cfmid":535825220872,
+        "dfnid":535740439145,
+        "eadid":535734064088,
+        "offid":576267291068,
+        "offreid":576925209307,
+        "offsubid":576268771221,
+        "luyongid":576415066342,
+        "luyongsubid":576415161967,
+        "luyongreid":576926671451
+    },
+    "appfunction":null
+
+}
+

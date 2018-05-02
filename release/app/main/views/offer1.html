@@ -1,0 +1,223 @@
+<form id="form1" class="opp">
+    <div class="imgContainer" data-bind="visible:allScreen()">
+        <img src ="../../../img/home.png" class="img">PowerWorks
+    </div>
+    <div class="header" data-bind="visible:allScreen()">
+        <div class="lf">
+            <b class="headerLeft lf">PW</b>
+            <input class="mt lf" data-bind="value: keys" id="search" data-bind=" keydown: searchFn "/>
+            <img src ="../../../img/home.png" class="img mt ml lf" data-bind="click: searchFn">
+        </div>
+        <div class="rf mr">
+            <img src ="../../../img/user1.png" class="img">
+            userName
+            <!-- <label>
+                <img src ="../../../img/home.png" class="img">
+                <div>20</div>
+            </label> -->
+        </div>
+    </div>
+    <div class="title" data-bind="visible:allScreen()">
+        <b class="titleText">In process</b>
+    </div>
+    <div class="left br" data-bind="visible:allScreen()">
+        <div style="overflow: hidden;">
+            <button type="button" class="leftBtn" onclick="wfa()" data-bind="css:{btnBg: showWFA()}">
+                Wait For Approval
+            </button>
+            <button type="button" class="leftBtn" onclick="rev()" data-bind="css:{btnBg: !showWFA()}">
+                Reviewed
+            </button>
+        </div>
+        <div style="overflow: hidden;background: #fff;">
+            <div class="listHeader bb" data-bind="visible:showWFA()">
+                <div class="lf">
+                    <button type="button" class="listBtn" data-bind="click:approveSubmits">
+                        Approve
+                    </button>
+                    <button type="button" class="listBtn" data-bind="click:rejectSubmits">
+                        Reject
+                    </button>
+                </div>
+                <div class="rf">
+                    <input type="checkbox" class="checkbox" id="c1" onclick="selectAll()">
+                </div>
+            </div>
+            <table width=100%>
+                <tbody data-bind="foreach: oList">
+                    <tr>
+                         <td class="tdTitle bb">
+                             <label style="width: 100%;margin:0">
+                                <div class="tdDiv">
+                                    <b data-bind="text: C3_576326288823"></b>
+                                    <input type="checkbox" class="checkbox rf" data-bind="checked: checkedState,click: selectOnly,visible:$root.showWFA()">
+                                </div>
+                                <div class="tdDiv">
+                                    Submit Time: <p data-bind="text: date"></p>
+                                    <div class="rf" data-bind="visible:$root.showWFA()">
+                                        <p data-bind="text: days"></p> days
+                                    </div>
+                                </div>
+                            </label>
+                         </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="right" data-bind="css: {allScreen: !allScreen()}">
+        <div class="rightTitle bb">
+            <b>Title-Department</b>
+            <img src ="../../../img/home.png" class="allScreenBtn rf" data-bind="click: allScreenFn,visible:allScreen()">
+            <img src ="../../../img/date.png" class="allScreenBtn rf" data-bind="click: allScreenFn,visible:!allScreen()">
+        </div>
+        <div class="rightDetail">
+            <div class="listDetail">
+                <label class="listTitle">Applicant</label> <b style="margin-left: 50px" data-bind="text: detailModel().C3_576267708039"></b>
+            </div>
+            <div class="listDetail">
+                <label class="listTitle">Current Approver</label> <b style="margin-left: 50px" data-bind="text: detailModel().C3_576267728802"></b>
+            </div>
+            <div class="listDetail">
+                <label class="listTitle">Current State</label> <b style="margin-left: 50px" data-bind="text: detailModel().C3_576267751069"></b>
+            </div>
+            <div class="listDetail">
+                <label class="listTitle">Follow up operation</label>
+                <a class="aBtn" style="border-right: 2px solid #bbb" data-bind="click: approveSubmit">Approve</a>
+                <a class="aBtn" data-bind="click: rejectSubmit">Reject</a>
+            </div>
+            <div class="listDetail">
+                <label class="listTitle">Comments</label>
+            </div>
+            <textarea class="depInputArea" style="resize:none" data-bind="value: detailModel().C3_576267780129"/>
+            <div class="listDetail b2">
+                <p class="listTitle b1" style="height:40px;" data-bind="click:clickDetail,css:{btnBg: showdetail()}">Detail Information</p><p style="height:40px;padding: 0 10px" data-bind="click:clickProcess,css:{btnBg: showprocess()}">Process</p>
+            </div>
+            <div id="di" data-bind="visible:showdetail()">
+                <div class="listDetail">
+                    <label class="listSubTitle" style="border-bottom: 2px solid #bbb;text-align: center">Request Info.</label>
+                </div>
+                <div class="listSub">
+                    <label class="listSubTitle">Title</label>
+                    <input type="text" data-bind="value: detailModel().C3_575717070376" />
+                    <label class="listSubTitle" style="margin-left:15px;">New/Replacement</label>
+                    <input type="text" data-bind="value: detailModel().C3_575717070543" />
+                </div>
+                <div class="listSub">
+                    <label class="listSubTitle">Replece whow</label>
+                    <input type="text" data-bind="value: detailModel().C3_575717071539" />
+                    <label class="listSubTitle" style="margin-left:15px;">Location</label>
+                    <input type="text" data-bind="value: detailModel().C3_575717070839" />
+                </div>
+                <div class="listSub">
+                    <label class="listSubTitle">Department</label>
+                    <input class="depInput" type="text" data-bind="value: detailModel().C3_575717071048" />
+                </div>
+                <div class="listSub">
+                    <label class="listSubTitle">Project/Function</label>
+                    <input type="text" data-bind="value: detailModel().C3_575717071371" />
+                    <label class="listSubTitle" style="margin-left:15px;">Hiring Manager</label>
+                    <input type="text" data-bind="value: detailModel().C3_575717071215" />
+                </div>
+                <div class="listDetail">
+                    <label class="listSubTitle">Resposibilities</label>
+                </div>
+                <div class="listTextarea">
+                    <label class="listSubTitle tar lf">1</label>
+                    <textarea class="depInput" data-bind="value: detailModel().C3_575717071701" readonly/>
+                </div>
+                <div class="listTextarea">
+                    <label class="listSubTitle tar lf">2</label>
+                    <textarea class="depInput" data-bind="value: detailModel().C3_575717071868" readonly/>
+                </div>
+                <div class="listTextarea">
+                    <label class="listSubTitle tar lf">3</label>
+                    <textarea class="depInput" data-bind="value: detailModel().C3_575717072030" readonly/>
+                </div>
+                <div class="listTextarea">
+                    <label class="listSubTitle tar lf">4</label>
+                    <textarea class="depInput" data-bind="value: detailModel().C3_575717072185" readonly/>
+                </div>
+                <div class="listTextarea">
+                    <label class="listSubTitle tar lf">5</label>
+                    <textarea class="depInput" data-bind="value: detailModel().C3_575717072343" readonly/>
+                </div>
+                <div class="listTextarea">
+                    <label class="listSubTitle tar lf">6</label>
+                    <textarea class="depInput" data-bind="value: detailModel().C3_575717072521" readonly/>
+                </div>
+                <div class="listTextarea">
+                    <label class="listSubTitle tar lf">7</label>
+                    <textarea class="depInput" data-bind="value: detailModel().C3_575717072676" readonly/>
+                </div>
+                <div class="listTextarea">
+                    <label class="listSubTitle tar lf">8</label>
+                    <textarea class="depInput" data-bind="value: detailModel().C3_575717072836" readonly/>
+                </div>
+                <div class="listTextarea">
+                    <label class="listSubTitle tar lf">9</label>
+                    <textarea class="depInput" data-bind="value: detailModel().C3_575717072996" readonly/>
+                </div>
+                <div class="listTextarea">
+                    <label class="listSubTitle tar lf">10</label>
+                    <textarea class="depInput" data-bind="value: detailModel().C3_575717073186" readonly/>
+                </div>
+                <div class="listDetail">
+                    <label class="listSubTitle">Qualifications</label>
+                </div>
+                <div class="listTextarea">
+                    <label class="listSubTitle tar lf">1</label>
+                    <textarea class="depInput" data-bind="value: detailModel().C3_575717073354" readonly/>
+                </div>
+                <div class="listTextarea">
+                    <label class="listSubTitle tar lf">2</label>
+                    <textarea class="depInput" data-bind="value: detailModel().C3_575717073515" readonly/>
+                </div>
+                <div class="listTextarea">
+                    <label class="listSubTitle tar lf">3</label>
+                    <textarea class="depInput" data-bind="value: detailModel().C3_575717073678" readonly/>
+                </div>
+                <div class="listTextarea">
+                    <label class="listSubTitle tar lf">4</label>
+                    <textarea class="depInput" data-bind="value: detailModel().C3_575717073837" readonly/>
+                </div>
+                <div class="listTextarea">
+                    <label class="listSubTitle tar lf">5</label>
+                    <textarea class="depInput" data-bind="value: detailModel().C3_575717074002" readonly/>
+                </div>
+                <div class="listTextarea">
+                    <label class="listSubTitle tar lf">6</label>
+                    <textarea class="depInput" data-bind="value: detailModel().C3_575717074164" readonly/>
+                </div>
+                <div class="listDetail">
+                    <label class="listSubTitle" style="width:400px">Reason for Headcount Application</label>
+                </div>
+                <div class="listTextarea">
+                    <label class="listSubTitle tar lf"> </label>
+                    <textarea class="depInputArea" rows=10 data-bind="value: detailModel().C3_575717074335" readonly/>
+                </div>
+            </div>
+            <div id="po" data-bind="visible:showprocess()">
+                <table width="100%" style="text-align: center">
+                    <thead>
+                        <tr>
+                            <th style="text-align: center">number</th>
+                            <th style="text-align: center">Approver</th>
+                            <th style="text-align: center">approval time</th>
+                            <th style="text-align: center">State of approval</th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach: pList">
+                        <tr>
+                            <td><b data-bind="text: C3_576268469809"></b></td>
+                            <td><b data-bind="text: C3_576268491687"></b></td>
+                            <td><b data-bind="text: date"></b></td>
+                            <td><b data-bind="text: C3_576268689524"></b></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</form>
+ 
