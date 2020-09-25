@@ -68,9 +68,6 @@ define(['plugins/dialog', 'knockout'], function (dialog, ko) {
            this.showdetail(true);
            this.showprocess(false);
            this.showmore(false);
-          document.getElementById("centerline").style.borderRight="1px solid #ccc";
-           document.getElementById("centerline").style.bordereft="0px";
-          
         //    document.getElementById("line").style.height="";
         //    var h = (document.getElementById("rightDetail").parentNode. scrollHeight-101)+"px";
         //    document.getElementById("line").style.height=h;
@@ -80,17 +77,12 @@ define(['plugins/dialog', 'knockout'], function (dialog, ko) {
             this.showdetail(false);
             this.showprocess(true);
             this.showmore(false);
-              
-            document.getElementById("centerline").style.borderLeft="0px";
-           document.getElementById("centerline").style.borderRight="0px"; 
             // document.getElementById("line").style.height="";
             // var h = (document.getElementById("rightDetail").parentNode. scrollHeight-101)+"px";
             // document.getElementById("line").style.height=h;
         },
         clickMore:function(){
            
-           document.getElementById("centerline").style.borderLeft="1px solid #ccc";
-           document.getElementById("centerline").style.borderRight="0px";
             this.showdetail(false);
             this.showprocess(false);
             this.showmore(true);
@@ -115,7 +107,6 @@ define(['plugins/dialog', 'knockout'], function (dialog, ko) {
             jsonStr=jsonStr.slice(0,-1);
             console.log(jsonStr);
             var json = "["+jsonStr+"]";
-            var _this=this;
             this.dbs.dbSavedata(luyongid,0,json,fnSuccess=function(text){
                 
                 setTimeout(function() {
@@ -123,9 +114,9 @@ define(['plugins/dialog', 'knockout'], function (dialog, ko) {
                     offerList(luyongid);
                     $("#c1").removeAttr("checked");
                     if(offerList.length==0||offerList==null){
-                        _this.data(true);
+                        this.data(true);
                     }else{
-                        _this.data(false);
+                        this.data(false);
                     }
                 }, 500);
 
@@ -136,7 +127,6 @@ define(['plugins/dialog', 'knockout'], function (dialog, ko) {
             } );
         },
         rejectSubmits:function(){
-            if(confirm('Reject this application?')){
 console.log(resData);
             var jsonStr="",z=0;
             for(var y=0;y<resData.length;y++){
@@ -153,7 +143,6 @@ console.log(resData);
             jsonStr=jsonStr.slice(0,-1);
             console.log(jsonStr);
             var json = "["+jsonStr+"]";
-            var _this=this;
             this.dbs.dbSavedata(luyongid,0,json,fnSuccess=function(text){
                 
                 setTimeout(function() {
@@ -161,9 +150,9 @@ console.log(resData);
                     offerList(luyongid);
                     $("#c1").removeAttr("checked");
                     if(offerList.length==0||offerList==null){
-                        _this.data(true);
+                        this.data(true);
                     }else{
-                        _this.data(false);
+                        this.data(false);
                     }
                 }, 500);
 
@@ -172,14 +161,10 @@ console.log(resData);
 
 
             } );
-        }
         },
         approveSubmit: function(){//提交按钮
           //  dialog.showMessage("Approve this application?","confirm",[],true);
-        //    if(confirm('Approve this application?')){
-            // if(!this.detailModel().REC_ID||!offid||!this.detailModel().C3_576267780129){
-            //     return false;
-            // }
+           if(confirm('Approve this application?')){
                 var o = {};
                 o._id=1;
                o._state="modified";
@@ -187,16 +172,15 @@ console.log(resData);
                o.C3_577296084691=this.detailModel().C3_577296084691;
                o.REC_ID=this.detailModel().REC_ID;
                json="["+JSON.stringify(o)+"]";
-               var _this=this;
                this.dbs.dbSavedata(luyongid,0,json,fnSuccess=function(text){
                 
                 setTimeout(function() {
                     
                     offerList(luyongid);
                     if(offerList.length==0||offerList==null){
-                        _this.data(true);
+                        this.data(true);
                     }else{
-                        _this.data(false);
+                        this.data(false);
                     }
                 }, 500);
 
@@ -205,7 +189,7 @@ console.log(resData);
 
 
                } );
-        //    }
+           }
        },
        rejectSubmit: function(){//提交按钮
            if(confirm('Reject this application?')){
@@ -216,16 +200,16 @@ console.log(resData);
                o.C3_577296084691=this.detailModel().C3_577296084691;
                o.REC_ID=this.detailModel().REC_ID;
                json="["+JSON.stringify(o)+"]";
-               var _this=this;
+               
                this.dbs.dbSavedata(luyongid,0,json,fnSuccess=function(text){
                 
                 setTimeout(function() {
                     
                     offerList(luyongid);
                     if(offerList.length==0||offerList==null){
-                        _this.data(true);
+                        this.data(true);
                     }else{
-                        _this.data(false);
+                        this.data(false);
                     }
                 }, 500);
 
@@ -244,15 +228,10 @@ console.log(resData);
                 var a = resData[x].C3_577527878289;
                 var b = resData[x].C3_575720834684;
                 var c = resData[x].C3_575720832516;
-                var d = resData[x].C3_575720833026;
-                var e = resData[x].states;
-                
                 var val1=a.toLowerCase();
                 var val2=b.toLowerCase();
                 var val3=c.toLowerCase();
-                var val4=d.toLowerCase();
-                var val5=e.toLowerCase();
-                if(val1.match(reg)||val2.match(reg)||val3.match(reg)||val4.match(reg)||val5.match(reg)){
+                if(val1.match(reg)||val2.match(reg)||val3.match(reg)){
                     newData.push(resData[x])
                 }
                 // if(resData[x].C3_575720834684.match(reg)){
@@ -272,7 +251,6 @@ console.log(resData);
             }
             this.oList([]);
             this.oList(newData);
-            
         },
         allScreenFn: function(){
             if(this.allScreen()){
@@ -314,8 +292,7 @@ console.log(resData);
                 $("#search").keydown(function (e) {
                     if (e.keyCode == 13) {
                         me.keys($('#search').val())
-                        me.searchFn();
-                        return false;
+                        me.searchFn()
                     }
                 });
             });
@@ -331,10 +308,6 @@ console.log(resData);
                         data[i].days = days
                         data[i].checkedState = false
                         data[i].dataIndex = i
-                        if (data[i].states==undefined)
-                        {
-                            data[i].states="";
-                        }
                     }
                     resData = data;
                     me.oList([]);
@@ -367,15 +340,6 @@ console.log(resData);
                 me.showREW(true)
                 me.list(false)  
             }
-            
-        // pressOn = function(event){
-        //     console.log(event)
-        //     alert("a啊a")
-        //    if(event && event.keyCode == 13){
-        //     alert("a啊a")
-        //     this.searchFn();
-        //    }
-        // }
             formatDate= function(e){
                 if(e==""||e==null){
                     return ""

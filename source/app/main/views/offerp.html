@@ -164,11 +164,8 @@
         <b class="titleText">Offer Confirmation</b>
     </div> -->
     <div style="overflow: hidden; width:100%;border-bottom:1px solid #e8e8e8;padding:14px;">
-        <button type="button"  class='btn-ant tab tab1 current' onclick="$('.tab').addClass('current');$('.tab2').removeClass('current');wfa();">
-            <!-- onclick="wfa();" -->
-            For Approval
-        </button>
-        <button type="button"  class='btn-ant tab tab2' onclick="$('.tab').addClass('current');$('.tab1').removeClass('current');rev();">
+        
+        <button type="button"  class='btn-ant tab tab2 current' onclick="$('.tab').addClass('current');$('.tab1').removeClass('current');rev();">
             <!-- onclick="rev()"  -->
             Records
         </button>
@@ -197,7 +194,6 @@
             
             <!-- old -->
             <table width=100%>
-                
                 <tbody data-bind="foreach: oList">
                     <tr data-bind="click: selectOnly">
                          <td class="tdTitle bb">
@@ -240,16 +236,30 @@
         <div id="line" style="border:1px solid #ccc;width:0;float:left;margin-left:2px;">
             </div>
         <div class="rightDetail" id="rightDetail">
-          
-            <div style='margin-top:16px;margin-left:24px;'>  
-                <button class="approveBtn ant-btn ant-btn-primary" data-bind="visible:showWFA(),click: approveSubmit">Approve</button>
-                <button class="approveBtn ant-btn ant-btn-danger" data-bind="visible:showWFA(),click: rejectSubmit">Reject</button>
+            <!-- <div class="listDetail">
+                <label class="listTitle">Applicant</label> <b style="margin-left: 50px" data-bind="text: detailModel().C3_577296084347"></b>
             </div>
+            <div class="listDetail">
+                <label class="listTitle">Current Approver</label> <b style="margin-left: 50px" data-bind="text: detailModel().C3_577296084161"></b>
+            </div>
+            <div class="listDetail">
+                <label class="listTitle">Current State</label> <b style="margin-left: 50px" data-bind="text: detailModel().C3_577296084509"></b>
+            </div> -->
+            <!-- <div class="listDetail">
+                <label class="listTitle">Follow up operation</label>
+                <a class="aBtn" style="border-right: 2px solid #bbb" data-bind="click: approveSubmit">Approve</a>
+                <a class="aBtn" data-bind="click: rejectSubmit">Reject</a>
+            </div> -->
+<!--             
             <div class="listDetail" style='margin-top:8px;margin-left:24px'>
                 <b class="listTitle">Comments</b>
             </div>
             <textarea class="depInputArea" style="resize:none;height:60px;margin-left:24px" data-bind="value: detailModel().C3_577296084691" />
-          
+             -->
+            <div style='margin-top:8px;margin-left:24px;'>  
+                <button class="approveBtn ant-btn ant-btn-primary" data-bind="visible:showWFA(),click: approveSubmit">Approve</button>
+                <button class="approveBtn ant-btn ant-btn-danger" data-bind="visible:showWFA(),click: rejectSubmit">Reject</button>
+            </div>
             <div style='width:100%;height:1px;background-color: #e8e8e8;margin-top: 24px;'></div>
             <div class='newDetails'>
                 <h3 class="listTitle b1" style="width:160px;height:40px;text-align:center;font-size:13px;font-weight:700;" data-bind="click:clickDetail,css:{btnBg: showdetail()}">Compensation Package</h3>
@@ -257,8 +267,12 @@
                 <!-- <h3 style="height:40px;padding: 0 10px;font-size:13px;font-weight:700;margin-left:-4px" data-bind="click:clickMore,css:{btnBg: showmore()}">More related</h3> -->
             </div>
             <div data-bind="visible:showdetail()">
-          
-            <div class='memberInfo'>
+            <p style="padding:16px 24px 0;font-size: 1rem;" data-bind="visible:(detailModel().C3_647541378011?true:false)">
+                Hi <span data-bind="text: detailModel().C3_647541378011"></span>,
+                <br/>
+                We have already got <span data-bind="text: detailModel().C3_648730507361"></span><span data-bind="visible:(detailModel().C3_648730507361?false:true)">Gray (or Lee)</span>’s approval for the offer to below candidate.  According to the Signature Authorization Matrix, I’m looping you in the process for your information.  If you have any concerns on the offer, please feel free to let us know.  Thanks.
+            </p>
+                <div class='memberInfo'>
                 <ul>
                     <li>
                         <b>Candidate：</b><span data-bind="text: detailModel().C3_575720833026"></span>
@@ -299,13 +313,13 @@
             
             <div class="listDetail" style='margin-left:24px;margin-bottom:16px;'>
                 <b class="listTitle">Attachment</b>
-                
+                <img  style="width:20px;height:20px;" src="../../../img/attachment.png" data-bind="visible: detailModel().C3_577296124859"/> 
+            
+                <a class="aBtn" style="width: 200px;margin-left:-30px;" data-bind="visible: detailModel().C3_577296124859,attr: { href: detailModel().C3_577296124859 }">Interview Assessment</a>
                 <img  style="width:20px;height:20px;" src="../../../img/attachment.png" data-bind="visible: detailModel().C3_577296124859"/> 
             
                 <a class="aBtn" style="margin-left:-22px;"  data-bind="visible: detailModel().C3_577296126919,attr: { href: detailModel().C3_577296126919 }">Resume</a>
-                <img  style="width:20px;height:20px;" src="../../../img/attachment.png" data-bind="visible: detailModel().C3_577296124859"/> 
-            
-                <a class="aBtn" style="width: 200px;margin-left:-30px;" data-bind="visible: detailModel().C3_577296124859,attr: { href: detailModel().C3_577296124859 }">Request form</a>
+              
             </div>
             </div>
             

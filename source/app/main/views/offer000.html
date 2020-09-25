@@ -1,0 +1,273 @@
+<script src="../../../../scripts/jquery-1.6.2.min.js"></script>
+<script src="../viewmodels/print.js"></script>
+<style type="text/css">
+    @media print
+    {
+        .pageBreak
+        {
+            page-break-after: always; /*强制换页的关键*/
+        }
+        .noPrint
+        {
+            display: none;
+        }
+    }
+</style>
+<script src=""></script>
+<form id="form1" class="opp">
+ 
+    <div class="header" data-bind="visible:allScreen()">
+        <div class="lf">
+            <b class="headerLeft lf">PW</b>
+            <input class="mt lf" id="search" data-bind=" keydown: searchFn,value: keys "/>
+            <img src ="../../../img/find.png" class="img mt ml lf" style="cursor: pointer" data-bind="click: searchFn" >
+        </div>
+        <div class="rf mr">
+            <img src ="../../../img/admin.png" class="img">
+            <span data-bind="text:userName()"></span>
+            <!-- <label>
+                <img src ="../../../img/home.png" class="img">
+                <div>20</div>
+            </label> -->
+        </div>
+    </div>
+    <div class="title" data-bind="visible:allScreen()">
+        <b class="titleText">Offer Confirmation</b>
+    </div>
+    
+    <div id="line" style="border:1px  solid #ccc;width:0px;margin-left:30%;height:calc(100% - 125px);position:absolute">
+        </div>
+    <div id="right" class="right" data-bind="css: {allScreen: !allScreen()},visible:list()">
+        <div class="rightTitle bb">
+            <b data-bind="text: detailModel().C3_577527878289+'-'+detailModel().C3_575720832516+ ' of ' +detailModel().C3_575720833026"></b>
+            <img src ="../../../img/enlarger.png"id="enlarger"  class="allScreenBtn rf" style="cursor: pointer" data-bind="click: allScreenFn,visible:allScreen()">
+            <img src ="../../../img/shrink.png" id="shrink" class="allScreenBtn rf"  style="cursor: pointer" data-bind="click: allScreenFn,visible:!allScreen()">
+            <img src ="../../../img/printer.png" id="prints" class="allScreenBtn rf" style="cursor: pointer"  data-bind="click: print,visible:!allScreen()">
+        </div>
+<!--         
+        <div id="line" style="border:1px  solid #ccc;width:0;float:left;margin-left:-2px;height:100%">
+            </div> -->
+        <div class="rightDetail" id="rightDetail">
+            
+            <div class="listDetail" style="margin-top:20px;">
+                <label class="listTitle"  style="background:#ccc;width:110px;font-weight:700;text-align:center;font-size:13px">Comments</label>
+            </div>
+            
+            <div class="listDetail" style="margin-top:-25px">
+                    <label class="listTitle" style="border-bottom:2px solid #bbb;width:95%;margin-top:-30px"></label>
+                </div>
+            <textarea class="depInputArea" style="resize:none;height:60px" data-bind="value: detailModel().C3_577296084691" />
+            <div>
+            <button class="approveBtn" data-bind="visible:showWFA(),click: approveSubmit">Approve</button>
+            <button class="approveBtn" data-bind="visible:showWFA(),click: rejectSubmit">Reject</button>
+          </div>
+<!--           
+          <div class="listDetail" >
+                <label class="listTitle" style="border-bottom:2px solid #ccc;width:95%"></label>
+            </div> -->
+            <div class="listDetail" style="margin-top:45px;border-bottom:2px solid #bbb;">
+                    <p class="listTitle b1" style="width:160px;height:40px;text-align:center;font-size:13px;font-weight:700;" data-bind="click:clickDetail,css:{btnBg: showdetail()}">Compensation Package</p>
+                    <p id="centerline" style="height:40px;padding: 0 10px;font-size:13px;font-weight:700;border-right:1px solid #ccc" data-bind="click:clickProcess,css:{btnBg: showprocess()}">Working Flow</p>
+                    <p style="height:40px;padding: 0 10px;font-size:13px;font-weight:700" data-bind="click:clickMore,css:{btnBg: showmore()}">More related</p>
+            </div>
+            <div data-bind="visible: showprocess()">
+                <table width="100%" style="text-align: center">
+                    <thead>
+                        <tr>
+                            <th style="text-align: center">Number</th>
+                            <th style="text-align: center">Approver</th>
+                            <th style="text-align: center">Date</th>
+                            <th style="text-align: center">Approve/Reject</th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach: pList">
+                        <tr>
+                            <td><b style="font-weight:normal" data-bind="text: C3_576414897244"></b></td>
+                            <td><b style="font-weight:normal" data-bind="text: C3_576414908880"></b></td>
+                            <td><b style="font-weight:normal" data-bind="text: date"></b></td>
+                            <td><b style="font-weight:normal" data-bind="text: C3_576414933129"></b></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div data-bind="visible:showdetail()">
+                    <!-- <div class="detailTitle">
+                        <p class="detailSubTitle" style="margin-top:2px">Offer Confirmation</p>
+                    </div> -->
+                <div class="listSub">
+ 
+                    <label class="listSubTitle1"> Location</label>
+                </div>
+                <div class="listSub">
+                    <input type="text"  class="loc" id="loc" style="width:87.3%" readonly data-bind="value: detailModel().C3_577527878289" />
+                </div>
+                <div>
+                    <label class="listSubTitle1" style="margin-left:4px;width:35%">Job Title</label>
+                    <label class="listSubTitle1" style="width:35%;margin-left:15%">Candidate</label>
+                </div>
+                <div class="listSub">
+                    <input type="text" class="inputs" style="width:35%" readonly data-bind="value: detailModel().C3_575720832516" />
+                    <input type="text" class="inputs" id="candidate" readonly style="width:36.6%;margin-left:15%" data-bind="value: detailModel().C3_575720833026" />
+                </div>
+               
+                <!-- <div class="detailTitle">
+                    <p class="detailSubTitle" >Offer Information</p>
+                </div> -->
+                <div class="listSub">
+                    <label class="listSubTitle3" id="Department1" style="width:35%">Department</label>
+                    <label class="listSubTitle3" id="Funcyion1" style="width:35%;margin-left:15.4%">Project/Funcyion</label>
+                </div>
+                <div class="listSub">
+                    <input class="depInput2" id="Department" readonly style="width:35%" type="text" data-bind="value: detailModel().C3_575720832864" />
+                    <input class="depInput2" id="Funcyion" readonly style="width:36.7%;margin-left:15%" type="text" data-bind="value: detailModel().C3_575720834198" />
+                </div>
+                <div class="listSub">
+                    <!-- <input type="text" class="inputs3" id="RMB" style="width:35%" maxlength="5" data-bind="value: 'Gross Salary     '+detailModel().C3_575720834527+'      Monthly RMB'" /> -->
+                 
+                    <!-- <label class="listSubTitle3" id="Salary" style="width:25%" >Gross Salary</label> -->
+                    <!-- <label style="font-size:12px">Monthly RMB</label> -->
+                    
+                <label class="listSubTitle3" id="RSUs1" style="width:35%"></label>
+                <label class="listSubTitle3" id="RSUs1" style="width:35%;margin-left:15.4%">RSUs(if any)</label>
+                   
+                </div>  
+                <div class="listSub"> 
+                    <span style="display:inline-block;width:35.1%;border:1px solid #bbb;background:#fff">
+                        <span style="display:inline-block;margin-left:0px" style="width:30%">Gross Salary   RMB</span>
+                        <span style="display:inline-block;margin-left:5%;width:41%"  data-bind="text:detailModel().C3_575720834527"></span>
+                        <span style="float:right;margin-right:1px"> /Month </span>
+                    </span>
+                 <input type="text" id="RSUs" class="inputs2" style="width:36.7%;margin-left:15%" readonly   data-bind="value: detailModel().C3_575720834839" />
+                </div>
+                <div class="listTextarea">  
+                    <label class="listSubTitle3" style="margin-left:4px;width:35%" id="Other1">Other (if any)</label>
+                </div>
+                <div class="listSub">
+                    <textarea  id="Other" class="Other" readonly style="width:87.3%"  data-bind="value: detailModel().C3_577298355324" readonly/>
+                </div>
+                <div class="listSub">
+                    <label class="listSubTitle3" style="width:35%" id="Replacement1">New/Replacement</label>
+                    <!-- <label class="listSubTitle" style="margin-left:15px;">Location</label>
+                    <input type="text" data-bind="value: detailModel().C3_575720832696" /> -->
+                </div>
+                <div class="listSub">
+                    <input type="text" class="depInput2"  readonly style="width:87.5%" id="Replacement"   data-bind="value: detailModel().C3_575720834684" />
+                </div>
+            </div>
+            <div data-bind="visible:showmore()">
+
+                    <div class="listSub">
+                            <label class="listSubTitle2" id="hiring" style="width:25%;font-size:13px">Summary from Hiring Manager</label>
+                            <label class="listSubTitle2"  style="font-size:13px" data-bind="text: detailModel().C3_577295903953"></label>
+                        </div>
+                       
+                        <!-- <div class="listSub">
+                            <input type="text" class="manager" id="manager" style="width:87.3%"   data-bind="value: detailModel().C3_577295903953" />
+                        </div> -->
+                        <div class="listTextarea">
+                            <label class="listSubTitle tar lf" data-bind="visible:detailModel().C3_575720833199,visible:detailModel().C3_575720833199">1</label>
+                            <textarea class="depInput" id="1"  data-bind="value: detailModel().C3_575720833199" readonly/>
+                        </div>
+                        <div class="listTextarea">
+                            <label class="listSubTitle tar lf" data-bind="visible:detailModel().C3_575720833388">2</label>
+                            <textarea class="depInput" id="2" data-bind="value: detailModel().C3_575720833388,visible:detailModel().C3_575720833388" readonly/>
+                        </div>
+                        <div class="listTextarea">
+                            <label class="listSubTitle tar lf" data-bind="visible:detailModel().C3_575720833559">3</label>
+                            <textarea class="depInput" id="3" data-bind="value: detailModel().C3_575720833559,visible:detailModel().C3_575720833559" readonly/>
+                        </div>
+                        <div class="listTextarea">
+                            <label class="listSubTitle tar lf" data-bind="visible:detailModel().C3_575720833722">4</label>
+                            <textarea class="depInput" id="4" data-bind="value: detailModel().C3_575720833722,visible:detailModel().C3_575720833722" readonly/>
+                        </div>
+                        <div class="listTextarea">
+                            <label class="listSubTitle tar lf" data-bind="visible:detailModel().C3_575720833882">5</label>
+                            <textarea class="depInput" id="5" data-bind="value: detailModel().C3_575720833882,visible:detailModel().C3_575720833882" readonly/>
+                        </div>
+                        <div class="listTextarea">
+                            <label class="listSubTitle tar lf" data-bind="visible:detailModel().C3_575720834041">6</label>
+                            <textarea class="depInput" id="6" data-bind="value: detailModel().C3_575720834041,visible:detailModel().C3_575720834041" readonly/>
+                        </div>
+                        <div class="listDetail">
+                                <label class="listTitle">Attachment</label>
+                                <img  style="width:20px;height:20px;" src="../../../img/attachment.png" data-bind="visible: detailModel().C3_577296124859"/> 
+                            
+                                <a class="aBtn" style="width: 400px;margin-left:-80px;" data-bind="visible: detailModel().C3_577296124859,attr: { href: detailModel().C3_577296124859 },">Interview Assessment-<span data-bind="text: detailModel().C3_575720833026"></span></a>
+                                <img  style="width:20px;height:20px;" src="../../../img/attachment.png" data-bind="visible: detailModel().C3_577296124859"/> 
+                            
+                                <a class="aBtn" style="margin-left:-120px;width: 400px;"  data-bind="visible: detailModel().C3_577296126919,attr: { href: detailModel().C3_577296126919 }">Resume-<span data-bind="text: detailModel().C3_575720833026"></span></a>
+                              
+                            </div>
+                </div>
+        </div>
+      
+    </div>
+    
+    <div class="left br" data-bind="visible:allScreen()">
+        <div style="overflow: hidden;">
+            <button type="button" class="leftBtn" onclick="wfa()" data-bind="css:{btnBg: showWFA()}">
+                 For Approval
+            </button>
+            <button type="button" class="leftBtn" onclick="rev()" data-bind="css:{btnBg: !showWFA()}">
+                Records
+            </button>
+        </div>
+        <div style="overflow: hidden;background: #fff;">
+            <div class="listHeader bb" data-bind="visible:showWFA()">
+                <div class="lf">
+                    <button type="button" data-bind="click:approveSubmits" class="listBtn">
+                        Approve
+                    </button>
+                    <button type="button"  class="listBtn" data-bind="click:rejectSubmits">
+                        Reject
+                    </button>
+                </div>
+                <div class="rf">
+                    <input type="checkbox"  style="margin-top:-10px" class="checkbox" id="c1"  onclick="selectAll()">
+                </div>
+                <div class="tvDiv">
+                        <span class="rf" style=" margin-right: -30px;display: inline-block; margin-top: 25px;font-size:10px">select all</span>
+                    </div>
+            </div>
+            <div class="img_data"  data-bind="visible:data()">
+                No pending actions
+            </div>
+            <table width=100%>
+                <tbody data-bind="foreach: oList">
+                    <tr data-bind="click: selectOnly">
+                         <td class="tdTitle bb">
+                             <label style="width: 100%;margin:0">
+                                <div class="tdDiv">
+                                    <b data-bind="text: C3_577527878289"></b><b>-</b>
+                                    <b data-bind="text: C3_575720832516"></b> <b>of</b>
+                                    <b data-bind="text: C3_575720833026"></b>
+                                    <!-- <b data-bind="text: C3_577295903953"></b> -->
+                                    <input type="checkbox" class="checkbox rf" data-bind="checked: checkedState,visible:$root.showWFA()">
+                                </div>
+                                <div class="tdDiv">
+                                     Submited Date: <p data-bind="text: date"></p>
+                                  
+                                    <div class="rf" data-bind="visible:$root.showWFA()">
+                                        <p data-bind="text: days"></p> days ago
+                                    </div>
+                                    <div class="rf" data-bind="visible:!$root.showWFA()">
+                                            <p data-bind="text:C3_577539013289"></p> 
+                                     </div>
+                                </div>
+                            </label>
+                         </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+                    <!--startprint-->
+   
+                    <!--endprint-->
+                    
+    <div id="print-content"></div>
+    <!-- <input class="noPrint" type="button" value="dayin" onclick="doPrintOut2()"/> -->
+</form>
+ 

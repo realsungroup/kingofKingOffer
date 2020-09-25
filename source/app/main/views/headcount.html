@@ -1,0 +1,532 @@
+<script src="../../../../scripts/jquery-1.6.2.min.js"></script>
+<script src="../viewmodels/print.js"></script>
+<style type="text/css">
+    @media print
+    {
+        .pageBreak
+        {
+            page-break-after: always; /*强制换页的关键*/
+        }
+        .noPrint
+        {
+            display: none;
+        }
+    }
+</style>
+
+<style>
+    .opp{
+
+        margin: 0;
+        padding:0;
+    }
+    .memberInfo ul{
+        list-style: none;
+        padding:0 24px;
+    }
+    .memberInfo li p,.memberInfo li b{
+        line-height: 32px;
+    }
+    .opp .checkbox{
+        width: 16px;
+        height: 16px;
+        margin-top: 0px;
+    }
+   
+    .btn-ant{
+        background: #fff;color:#333;border:none;font-size: 14px;margin-right:8px;
+        outline: none;
+        cursor:pointer;
+        
+    }
+    .btn-ant:hover{
+        color:#1890ff;
+        opacity: .75;
+    }
+    .current{
+        color:#1890ff;
+    }
+    .ant-btn{
+        border:1px solid #e8e8e8;
+        background-color: #fff;
+        color:#333;
+        outline:none;
+        padding:6px 12px;
+        border-radius:4px;
+        cursor: pointer;
+        margin-right: 8px;
+    }
+    .ant-btn-primary{
+        background-color: #1890ff;
+        color:#fff;
+        border-color:#1890ff;
+    }
+    .ant-btn:hover{
+        opacity: .8;
+    }
+    .ant-btn-danger{
+        color:#f5222d;
+    }
+    .rf{
+        text-align: right;
+    }
+    .rf p{
+        display: block;
+    }
+    .left_list{
+        background-color: #fff;
+        height:calc(100vh - 114px);
+        overflow: auto;
+    }
+    .opp .rightTitle{
+        height:40px;
+        line-height: 40px;
+        width:calc(100% - 40px);
+    }
+    .opp .allScreenBtn{
+        width: 16px;
+        height: 16px;
+        margin: 12px;
+    }
+    .opp .rightDetail{
+        height: calc(100vh - 96px);
+        background-color: #fff;
+        overflow: auto;
+        margin:0;
+        padding:0;
+        box-sizing: border-box;
+    }
+    .listDetail{
+        margin-top: 8px;
+    }
+    .newDetails{
+        border-bottom:1px solid #e8e8e8;
+        height: 32px;
+        margin:0 24px;
+        box-sizing: border-box;
+    }
+    .newDetails h3{
+        color:#1890ff;
+        font-size: 14px;
+    }
+    .hellow{
+        padding:24px;
+        box-sizing: border-box;
+    }
+    .hellow{
+        line-height: 24px;
+    }
+    .msgtbl{
+        width:calc(100% - 48px);
+        margin:0 24px;
+        box-sizing: border-box;
+        border: 1px solid #e8e8e8;
+        
+    }
+    .msgtbl tr,.msgtbl th{
+        border: 1px solid #e8e8e8;
+        line-height: 32px;
+        font-weight: 100;
+        text-align: left;
+        font-size: 16px;
+        padding:0 16px;
+        box-sizing: border-box;
+    }
+    .msgtbl tr span{
+        font-weight: normal;
+        margin-left: 8px;
+    }
+    .msgtbl2{
+        margin:16px 24px;
+    }
+    .msgtbl2 th{
+        overflow: hidden;
+        color:#333;
+    }
+    .msgtbl2 div{
+        float:left;
+        width:55%;
+        text-align: left;
+       
+    }
+    .msgtbl2 div:nth-child(2){
+        width:25%;
+    }
+    .msgtbl2 div:nth-child(3){
+        width:20%;
+    }
+    .tail{
+        margin:0 24px 16px;
+    }
+    .tail span{
+        display: block;
+    }
+    .tail p{
+        min-height: 240px;
+    }
+    .opp .tdDiv{
+        height:auto;
+    }
+    .hideDetail{
+        display: none;
+    }
+    .showDetail{
+        display: block;
+    }
+    .btn-letter{
+        color:#1890ff;
+        cursor: pointer;
+        margin: 16px 24px;
+    }
+</style>
+<form id="form1" class="opp">
+
+    <div style="overflow: hidden; width:100%;border-bottom:1px solid #e8e8e8;padding:14px;">
+        <button type="button"  class='btn-ant tab tab1 current' onclick="$('.tab').addClass('current');$('.tab2').removeClass('current');wfa();">
+            <!-- onclick="wfa();" -->
+            For Approval
+        </button>
+        <button type="button"  class='btn-ant tab tab2' onclick="$('.tab').addClass('current');$('.tab1').removeClass('current');rev();">
+            <!-- onclick="rev()"  -->
+            Records
+        </button>
+    </div>
+    <div class="left br" data-bind="visible:allScreen()" style='border-color: #e8e8e8;'>      
+        <div style="overflow: hidden;background: #fff;">
+            <div class="listHeader bb" data-bind="visible:showWFA()">
+                <div class="lf">
+                    <button type="button" data-bind="click:approveSubmits" class="ant-btn ant-btn-primary">
+                        Approve
+                    </button>
+                    <button type="button"  class="ant-btn ant-btn-danger" data-bind="click:rejectSubmits">
+                        Reject
+                    </button>
+                </div>
+                <div class="rf">
+                    <input type="checkbox" class="checkbox" id="c1"  onclick="selectAll()">
+                    <p>Select All</p>
+                </div>
+            </div>
+            <div class='left_list'>
+            <div class="img_data"  data-bind="visible:data()">
+              No Data 
+            </div>
+            <table width=100%>
+                <tbody data-bind="foreach: oList">
+                    <tr data-bind="click: selectOnly">
+                         <td class="tdTitle bb">
+                             <label style="width: 100%;margin:0">
+                                <div class="tdDiv">
+                                    <b><b data-bind="text: C3_575717070839"></b> - <b data-bind="text: C3_575717070543"></b> HC of <b data-bind="text: C3_575717070376"></b></b>
+                                    <!-- <b data-bind="text: C3_577295903953"></b> -->
+                                    <input type="checkbox" class="checkbox rf" data-bind="checked: checkedState,visible:$root.showWFA()">
+                                </div>
+                                <div class="tdDiv">
+                                     Time: <p data-bind="text: date"></p>
+                                  
+                                    <div class="rf" data-bind="visible:$root.showWFA()">
+                                       Duration <span data-bind="text: days"></span> days
+                                    </div>
+                                    
+                                </div>
+                            </label>
+                         </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+    
+                    <!--startprint-->
+    <div id="right" class="right" data-bind="css: {allScreen: !allScreen()},visible:list()">
+        <div class="rightTitle bb">
+            <b data-bind="text: detailModel().C3_576326288823"></b>
+            <img src ="../../../img/enlarger.png"id="enlarger"  class="allScreenBtn rf" style="cursor: pointer" data-bind="click: allScreenFn,visible:allScreen()">
+            <img src ="../../../img/shrink.png" id="shrink" class="allScreenBtn rf"  style="cursor: pointer" data-bind="click: allScreenFn,visible:!allScreen()">
+            <img src ="../../../img/printer.png" id="prints" class="allScreenBtn rf" style="cursor: pointer"  data-bind="click: print,visible:!allScreen()">
+        </div>
+        
+        <div id="line" style="border:1px solid #ccc;width:0;float:left;margin-left:2px;">
+            </div>
+        <div class="rightDetail" id="rightDetail">
+            <div style='margin-top:16px;margin-left:24px;'>  
+                <button class="approveBtn ant-btn ant-btn-primary" data-bind="visible:showWFA(),click: approveSubmit">Approve</button>
+                <button class="approveBtn ant-btn ant-btn-danger" data-bind="visible:showWFA(),click: rejectSubmit">Reject</button>
+            </div>
+            <div class="listDetail" style='margin-top:8px;margin-left:24px'>
+                <b class="listTitle">Comments</b>
+            </div>
+            <textarea class="depInputArea" style="resize:none;height:60px;margin-left:24px" data-bind="value: detailModel().C3_576267780129" />
+            
+            
+            <div style='width:100%;height:1px;background-color: #e8e8e8;margin-top: 24px;'></div>
+            <div class='newDetails'>
+                <h3>Description</h3>
+            </div>
+            <div class='hellow'>
+                <h3 data-bind="text: detailModel().C3_575717070543+' - '+detailModel().C3_575717070839+' - '+detailModel().C3_575717070376+' - Salaried Level '+ detailModel().C3_645009862212 + '(Reference II-VI global job grade in discussion is '+ detailModel().C3_645009861850+': RMB'+ detailModel().C3_645009862442+' - '+ detailModel().C3_645009862662+'/Month;'">
+                   
+                </h3>
+            </div>
+            <div>
+                <table class='msgtbl' cellpadding='0' cellspacing='0'>
+                    <tr>
+                        <th>
+                            Date Requested:<span data-bind="text: detailModel().C3_645643862014"></span>
+                        </th>
+                        <th>
+                            Date Needed:<span data-bind="text: detailModel().C3_645643862492"></span>
+                        </th>
+                        <th>
+                            Supervisor:<span data-bind="text: detailModel().C3_645009857267"></span>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            Segment:<span data-bind="text: detailModel().C3_645009857527"></span>
+                        </th>
+                        <th>
+                            Business Unit:<span data-bind="text: detailModel().C3_645009857912"></span>
+                        </th>
+                        <th>
+                            Location:<span data-bind="text: detailModel().C3_645009858189"></span>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            Job Title:<span data-bind="text: detailModel().C3_575717070376"></span>
+                        </th>
+                        <th>
+                            Dept.:<span data-bind="text: detailModel().C3_645009858189"></span>
+                        </th>
+                        <th>
+                            Shift:<span data-bind="text: detailModel().C3_645009858445"></span>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            Reason for Opening:<span data-bind="text: detailModel().C3_645009858704"></span>
+                        </th>
+                        <th colspan="2">
+                            Replacement for:<span data-bind="text: detailModel().C3_575717071539"></span>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            Employee Type:<span data-bind="text: detailModel().C3_645009859401"></span>
+                        </th>
+                        <th>
+                            Status:<span data-bind="text: detailModel().C3_645009859844"></span>
+                        </th>
+                        <th>
+                            Budgeted Rate:<span data-bind="text: detailModel().C3_645009860242"></span>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            Budgeted?<span data-bind="text: detailModel().C3_645009860624"></span>
+                        </th>
+                        <th>
+                            Budget Quarter:	<span data-bind="text: detailModel().C3_645009861001"></span>
+                        </th>
+                        <th>
+                            Pay Type:<span data-bind="text: detailModel().C3_645009861544"></span>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            Job Grade Level:<span data-bind="text: detailModel().C3_645009861850"></span>
+                        </th>
+                        <th colspan="2">
+                            Salary Range:<span data-bind="text: detailModel().C3_645009862442+'~'+detailModel().C3_645009862662"></span>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            Relocation Eligible?<span data-bind="text: detailModel().C3_645009863130"></span>
+                        </th>
+                        <th colspan="2">
+                            Incentive Eligible?<span data-bind="text: detailModel().C3_645009863562"></span>
+                        </th>
+                    </tr>
+                </table>
+                <table class='msgtbl msgtbl2' cellpadding='0' cellspacing='0'>
+                    <tr>
+                        <th>
+                            <div>
+                                Approved by:<span data-bind="text: detailModel().DepartManager"></span>
+                             </div>
+                             <div>
+                                Date:<span data-bind="text: detailModel().dateManager"></span>
+                             </div>
+                             <div>
+                                Department Manager
+                             </div>   
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div>
+                                Approved by:<span data-bind="text: detailModel().SManager"></span>
+                             </div>
+                             <div>
+                                Date:<span data-bind="text: detailModel().dateSManager"></span>
+                             </div>
+                             <div>
+                                Senior Manager(1-up)
+                             </div>   
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div>
+                                Approved by:<span data-bind="text: detailModel().LocalHR"></span>
+                             </div>
+                             <div>
+                                Date:<span data-bind="text: detailModel().dateLocalHR"></span>
+                             </div>
+                             <div>
+                                Local HR
+                             </div>   
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div>
+                                Approved by:<span data-bind="text: detailModel().GeneralManager"></span>
+                             </div>
+                             <div>
+                                Date:<span data-bind="text: detailModel().dateGeneralManager"></span>
+                             </div>
+                             <div>
+                                General Manager
+                             </div>   
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div>
+                                Approved by:<span data-bind="text: detailModel().GroupVP"></span>
+                             </div>
+                             <div>
+                                Date:<span data-bind="text: detailModel().dateGroup"></span>
+                             </div>
+                             <div>
+                                Group VP(if applicable)
+                             </div>   
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div>
+                                Approved by:<span data-bind="text: detailModel().SegmentPresident"></span>
+                             </div>
+                             <div>
+                                Date:<span data-bind="text: detailModel().dateSegmentPresident"></span>
+                             </div>
+                             <div>
+                                Segment President
+                             </div>   
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div>
+                                Approved by:<span data-bind="text: detailModel().President"></span>
+                             </div>
+                             <div>
+                                Date:<span data-bind="text: detailModel().datePresident"></span>
+                             </div>
+                             <div>
+                                President
+                             </div>   
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div>
+                                Approved by:<span data-bind="text: detailModel().CEO"></span>
+                             </div>
+                             <div>
+                                Date:<span data-bind="text: detailModel().dateCEO"></span>
+                             </div>
+                             <div>
+                                CEO
+                             </div>   
+                        </th>
+                    </tr>
+                </table>
+                <div class='btn-letter btn-letter-first' onClick="$('.hideDetail').addClass('showDetail');$(this).addClass('hideDetail')">Show Details ></div>
+                <div class='btn-letter hideDetail' onClick="$('.showDetail').removeClass('showDetail');$('.btn-letter-first').removeClass('hideDetail')">Hide Details ></div>
+                
+                <table class='msgtbl hideDetail' cellpadding='0' cellspacing='0'>
+                    <tr>
+                        <th colspan="12">Minimum Education Required:<span data-bind="text: detailModel().C3_645009863981"></span></th>
+                    </tr>
+                    <tr>
+                        <th colspan="8">Certifications Required:<span data-bind="text: detailModel().C3_645009864349"></span></th>
+                        <th colspan="4">% of Travel:<span data-bind="text: detailModel().C3_645009864747"></span></th>
+                    </tr>
+                    <tr>
+                        <th colspan="12">What are keywords that can be used in the resume search?</th>
+                    </tr>
+                    <tr>
+                        <th colspan="6">1)<span data-bind="text: detailModel().C3_645009865167"></span></th>
+                        <th colspan="6">4)<span data-bind="text: detailModel().C3_645009865821"></span></th>
+                    </tr>
+                    <tr>
+                        <th colspan="6">2)<span data-bind="text: detailModel().C3_645009865390"></span></th>
+                        <th colspan="6">5)<span data-bind="text: detailModel().C3_645009866069"></span></th>
+                    </tr>
+                    <tr>
+                        <th colspan="6">3)<span data-bind="text: detailModel().C3_645009865613"></span></th>
+                        <th colspan="6">6)<span data-bind="text: detailModel().C3_645009866346"></span></th>
+                    </tr>
+                    <tr>
+                        <th colspan="6">Top 3 Critical Technical/Functional Skills (Knowledge/Skills):</th>
+                        <th colspan="6">Top 3 Behaviors</th>
+                    </tr>
+                    <tr>
+                        <th colspan="6">1)<span data-bind="text: detailModel().C3_645009866595"></span></th>
+                        <th colspan="6">1)<span data-bind="text: detailModel().C3_645009867343"></span></th>
+                    </tr>
+                    <tr>
+                        <th colspan="6">2)<span data-bind="text: detailModel().C3_645009866843"></span></th>
+                        <th colspan="6">2)<span data-bind="text: detailModel().C3_645009867595"></span></th>
+                    </tr>
+                    <tr>
+                        <th colspan="6">3)<span data-bind="text: detailModel().C3_645009867092"></span></th>
+                        <th colspan="6">3)<span data-bind="text: detailModel().C3_645009868013"></span></th>
+                    </tr>
+                </table>
+                <table class='msgtbl hideDetail' style='margin-top: 16px;' cellpadding='0' cellspacing='0'>
+                    <tr>
+                        <th colspan="12">Filled By:</th>
+                    </tr>
+                    <tr>
+                        <th colspan="6">Name:<span data-bind="text: detailModel().C3_645009868368"></span></th>
+                        <th colspan="6">Date of Hire:<span data-bind="text: detailModel().C3_645643862726"></span></th>
+                    </tr>
+                    <tr>
+                        <th colspan="6">Rate of Pay:<span data-bind="text: detailModel().C3_645009868608"></span></th>
+                        <th colspan="6">Badge Number:<span data-bind="text: detailModel().C3_645009869067"></span></th>
+                    </tr>
+                </table>
+                <br/>
+                <div class='tail hideDetail'>
+                    <span>KEY JOB DUTIES & RESPONSIBILITIES:</span>
+                    <span>(If Contractor/Temporary, please indicate length of project with a maximum 90 days)</span>
+                    <p data-bind="text: detailModel().C3_645009869318"></p>
+                    <span>SKILLS & QUALIFICATIONS:</span>
+                    <span>(Include Education, Skills & Experience) </span>
+                    <p data-bind="text: detailModel().C3_645009869568"></p>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+    <div id="print-content"></div>
+</form>
+ 

@@ -115,7 +115,6 @@ define(['plugins/dialog', 'knockout'], function (dialog, ko) {
             jsonStr=jsonStr.slice(0,-1);
             console.log(jsonStr);
             var json = "["+jsonStr+"]";
-            var _this=this;
             this.dbs.dbSavedata(luyongid,0,json,fnSuccess=function(text){
                 
                 setTimeout(function() {
@@ -123,9 +122,9 @@ define(['plugins/dialog', 'knockout'], function (dialog, ko) {
                     offerList(luyongid);
                     $("#c1").removeAttr("checked");
                     if(offerList.length==0||offerList==null){
-                        _this.data(true);
+                        this.data(true);
                     }else{
-                        _this.data(false);
+                        this.data(false);
                     }
                 }, 500);
 
@@ -153,7 +152,6 @@ console.log(resData);
             jsonStr=jsonStr.slice(0,-1);
             console.log(jsonStr);
             var json = "["+jsonStr+"]";
-            var _this=this;
             this.dbs.dbSavedata(luyongid,0,json,fnSuccess=function(text){
                 
                 setTimeout(function() {
@@ -161,9 +159,9 @@ console.log(resData);
                     offerList(luyongid);
                     $("#c1").removeAttr("checked");
                     if(offerList.length==0||offerList==null){
-                        _this.data(true);
+                        this.data(true);
                     }else{
-                        _this.data(false);
+                        this.data(false);
                     }
                 }, 500);
 
@@ -187,16 +185,15 @@ console.log(resData);
                o.C3_577296084691=this.detailModel().C3_577296084691;
                o.REC_ID=this.detailModel().REC_ID;
                json="["+JSON.stringify(o)+"]";
-               var _this=this;
                this.dbs.dbSavedata(luyongid,0,json,fnSuccess=function(text){
                 
                 setTimeout(function() {
                     
                     offerList(luyongid);
                     if(offerList.length==0||offerList==null){
-                        _this.data(true);
+                        this.data(true);
                     }else{
-                        _this.data(false);
+                        this.data(false);
                     }
                 }, 500);
 
@@ -216,16 +213,16 @@ console.log(resData);
                o.C3_577296084691=this.detailModel().C3_577296084691;
                o.REC_ID=this.detailModel().REC_ID;
                json="["+JSON.stringify(o)+"]";
-               var _this=this;
+               
                this.dbs.dbSavedata(luyongid,0,json,fnSuccess=function(text){
                 
                 setTimeout(function() {
                     
                     offerList(luyongid);
                     if(offerList.length==0||offerList==null){
-                        _this.data(true);
+                        this.data(true);
                     }else{
-                        _this.data(false);
+                        this.data(false);
                     }
                 }, 500);
 
@@ -304,7 +301,7 @@ console.log(resData);
             me.showdetail(true);
             me.showprocess(false);
             me.showmore(false);
-            me.showWFA(true);
+            me.showWFA(false);
             me.showREW(true);
             me.allScreen(true);
             me.list(false);
@@ -354,7 +351,7 @@ console.log(resData);
                     // console.log(jqXHR);
                 };
             }
-            offerList(luyongid);
+            offerList(luyongreid);
             wfa= function(){
                 me.showWFA(true)
                 offerList(luyongid)
@@ -365,7 +362,7 @@ console.log(resData);
                 me.showWFA(false)
                 offerList(luyongreid)
                 me.showREW(true)
-                me.list(false)  
+                me.list(false)
             }
             
         // pressOn = function(event){
