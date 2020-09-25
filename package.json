@@ -39,6 +39,6 @@
     "wallabify": "0.0.14"
   },
   "dependencies": {
-    "jquery": "^2.2.0"
+    "jquery": "^3.5.1"
   }
 }
